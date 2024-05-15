@@ -15,7 +15,8 @@ from io import BytesIO
 import os
 import re
 import numpy as np
-
+import streamlit as st
+import os
 
 def download_and_extract_zip(url):
     # Parse the URL to get the file name from the query string or path
@@ -44,8 +45,8 @@ def download_and_extract_zip(url):
 def compare_faces(sourceFile, targetFile):
 
     session = boto3.Session(
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    aws_access_key_id=st.secrets["AWS_ACCESS_KEY_ID"],
+    aws_secret_access_key=st.secrets["AWS_SECRET_ACCESS_KEY"],
 )
     client = session.client('rekognition')
 
@@ -392,8 +393,7 @@ def run(url):
 
 
 
-import streamlit as st
-import os
+
 
 # Assuming all necessary functions from the notebook are already imported
 
