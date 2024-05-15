@@ -348,7 +348,7 @@ def save_predictions(predictions, input_data, file_path):
         (merged_results['bankacc_ver'] == 1)
     )
     merged_results['pred_date'] = merged_results['date'].where(conditions, "NA")
-    #merged_results.drop(columns=['date', 'bankAcctID', 'verifiedID', 'fraud', 'bankacc_ver'], inplace=True)
+    merged_results.drop(columns=['date', 'bankAcctID', 'verifiedID', 'fraud', 'bankacc_ver'], inplace=True)
     merged_results.rename(columns={'pred_date': 'date'}, inplace=True)
     merged_results.rename(columns={'custID': 'loginID'}, inplace=True)
     
