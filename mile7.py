@@ -315,19 +315,22 @@ def generate_predictions(transactions, input_data, start_date, end_date, min_amo
     predictions = []
     for acct_id, group in filtered_transactions.groupby('bankAcctID'):
         dates = pd.to_datetime(group['date'].sort_values())
-        last_date = dates.iloc[-1]
-        secondlast_date = dates.iloc[-2]
-        print(last_date)
-        #next_paydate = predict_next_paydate(dates, last_date)
-        #print(dates,last_date)
-        next_paydate = predit(last_date,secondlast_date)
-        if next_paydate == None:
-            next_paydate = predict_next_paydate(dates, last_date)
+        if len(dates) >= 2:
+            last_date = dates.iloc[-1]
+            secondlast_date = dates.iloc[-2]
+            print(last_date)
+            #next_paydate = predict_next_paydate(dates, last_date)
+            #print(dates,last_date)
+            next_paydate = predit(last_date,secondlast_date)
+            if next_paydate == None:
+                next_paydate = predict_next_paydate(dates, last_date)
+        else:
+            next_paydate = None
 
         print(acct_id,secondlast_date,last_date,next_paydate)
         predictions.append({
             'bankAcctID': acct_id,
-            'date': next_paydate.strftime('%Y-%m-%d') if next_paydate else np.nan,
+            'date': next_paydate.strftime('%Y-%m-%d') if next_paydate else "NA",
         })
     return pd.DataFrame(predictions)
 
@@ -344,7 +347,7 @@ def save_predictions(predictions, input_data, file_path):
         (merged_results['fraud'] == 0) &
         (merged_results['bankacc_ver'] == 1)
     )
-    merged_results['pred_date'] = merged_results['date'].where(conditions, np.nan)
+    merged_results['pred_date'] = merged_results['date'].where(conditions, "NA")
     #merged_results.drop(columns=['date', 'bankAcctID', 'verifiedID', 'fraud', 'bankacc_ver'], inplace=True)
     merged_results.rename(columns={'pred_date': 'date'}, inplace=True)
     merged_results.rename(columns={'custID': 'loginID'}, inplace=True)
