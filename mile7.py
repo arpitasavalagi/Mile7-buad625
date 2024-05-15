@@ -401,7 +401,7 @@ def run(url):
 # Assuming all necessary functions from the notebook are already imported
 
 def main():
-    st.title('Data Processing and Prediction')
+    st.title('Milestone7')
     
     # Input for URL
     url = st.text_input("Enter the URL of the zip file to process:")
