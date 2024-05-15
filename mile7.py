@@ -44,8 +44,8 @@ def download_and_extract_zip(url):
 def compare_faces(sourceFile, targetFile):
 
     session = boto3.Session(
-    aws_access_key_id=settings.AWS_SERVER_PUBLIC_KEY,
-    aws_secret_access_key=settings.AWS_SERVER_SECRET_KEY,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
 )
     client = session.client('rekognition')
 
